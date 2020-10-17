@@ -4,6 +4,7 @@ const fileUpload = require("express-fileupload");
 const fs = require("fs-extra");
 const cors = require("cors");
 const MongoClient = require("mongodb").MongoClient;
+const ObjectId = require("mongodb").ObjectID;
 
 require("dotenv").config();
 
@@ -106,6 +107,16 @@ client.connect((err) => {
       res.send(document);
     });
   });
+
+ app.patch("/update/:id", (req, res) => {
+   collection .updateOne(
+       { _id: ObjectId(req.params.id) },
+       {$set: { status: req.body.status}, }
+     )
+     .then((result) => res.send(result.modifiedCount > 0));
+ });
+
+
 });
 
 app.listen(process.env.PORT||8000);
