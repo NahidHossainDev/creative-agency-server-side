@@ -108,8 +108,8 @@ client.connect((err) => {
     });
   });
 
- app.patch("/update/:id", (req, res) => {
-   collection .updateOne(
+  app.patch("/update/:id", (req, res) => {
+   orderCollection .updateOne(
        { _id: ObjectId(req.params.id) },
        {$set: { status: req.body.status}, }
      )
